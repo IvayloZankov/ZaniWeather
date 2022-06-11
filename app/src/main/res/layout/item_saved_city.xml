@@ -5,6 +5,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:text="Varna"
     android:padding="@dimen/margin_weather_info"
-    android:textSize="20sp"
+    android:textSize="18sp"
     android:textColor="@color/white_masked"
     />

@@ -143,7 +143,7 @@
         <FrameLayout
             android:id="@+id/searchSheet"
             android:layout_width="match_parent"
-            android:layout_height="350dp"
+            android:layout_height="300dp"
             app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
             android:background="@drawable/sheet_background_transition"
             >
@@ -160,7 +160,8 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:layout_marginHorizontal="@dimen/margin_weather_layout"
-                android:layout_marginVertical="@dimen/margin_weather_layout"
+                android:layout_marginTop="@dimen/margin_weather_layout"
+                android:layout_marginBottom="@dimen/margin_weather_info"
                 >
                 <TextView
                     android:fontFamily="sans-serif-light"

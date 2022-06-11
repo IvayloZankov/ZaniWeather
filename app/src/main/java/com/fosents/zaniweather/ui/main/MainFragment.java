@@ -126,26 +126,28 @@ public class MainFragment extends Fragment {
         ImageView imageViewSearch = view.findViewById(R.id.imageSearchCity);
         mEditTextCity.setOnEditorActionListener((textView, i, keyEvent) -> {
             if (i == EditorInfo.IME_ACTION_SEARCH) {
-                String cityName = mEditTextCity.getText().toString();
+                String cityName = mEditTextCity.getText().toString().trim();
                 initUserInputWeatherRequest(cityName, false);
                 return true;
             }
             return false;
         });
         imageViewSearch.setOnClickListener(v -> {
-            String cityName = mEditTextCity.getText().toString();
+            String cityName = mEditTextCity.getText().toString().trim();
             initUserInputWeatherRequest(cityName, false);
         });
     }
 
     private void initUserInputWeatherRequest(String cityName, boolean isFromSavedCity) {
-        mViewModel.setCityName(cityName);
-        mViewModel.initWeatherDataRequest(true, isFromSavedCity);
-        InputMethodManager in =
-                (InputMethodManager) requireActivity()
-                        .getSystemService(Context.INPUT_METHOD_SERVICE);
-        in.hideSoftInputFromWindow(mEditTextCity.getWindowToken(), 0);
-        mSearchSheet.setState(STATE_COLLAPSED);
+        if (!cityName.isEmpty()) {
+            mViewModel.setCityName(cityName);
+            mViewModel.initWeatherDataRequest(true, isFromSavedCity);
+            InputMethodManager in =
+                    (InputMethodManager) requireActivity()
+                            .getSystemService(Context.INPUT_METHOD_SERVICE);
+            in.hideSoftInputFromWindow(mEditTextCity.getWindowToken(), 0);
+            mSearchSheet.setState(STATE_COLLAPSED);
+        }
     }
 
     private void initSearchSheet(View view) {
@@ -250,7 +252,10 @@ public class MainFragment extends Fragment {
 
     private void initFloatLocationButton(@NonNull View view) {
         FloatingActionButton floatingLocation = view.findViewById(R.id.floatingLocation);
-        floatingLocation.setOnClickListener(v -> mViewModel.getUserLocation());
+        floatingLocation.setOnClickListener(v -> {
+            mViewModel.getUserLocation();
+            mSearchSheet.setState(STATE_COLLAPSED);
+        });
     }
 
     private void requestPermissions() {

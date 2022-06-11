@@ -1,0 +1,27 @@
+buildscript {
+    ext {
+        hilt_plugin_ver = '2.40.1'
+        gradle_ver = '7.2.1'
+        hilt_dependency_ver = '2.38.1'
+        retrofit_ver = '2.9.0'
+        swipe_refresh_ver = '1.1.0'
+        datastore_ver = '1.0.0'
+    }
+    repositories {
+        google()
+        mavenCentral()
+    }
+    dependencies {
+        classpath "com.android.tools.build:gradle:$gradle_ver"
+        classpath "com.google.dagger:hilt-android-gradle-plugin:$hilt_plugin_ver"
+    }
+}
+
+plugins {
+    id 'com.android.application' version '7.2.1' apply false
+    id 'com.android.library' version '7.2.1' apply false
+}
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="margin_weather_layout">32dp</dimen>
+    <dimen name="margin_weather_layout_bottom">84dp</dimen>
+    <dimen name="margin_weather_info">10dp</dimen>
+    <dimen name="margin_weather_icon">16dp</dimen>
+    <dimen name="margin_weather_fab_end">16dp</dimen>
+    <dimen name="margin_weather_fab_top">48dp</dimen>
+    <dimen name="text_size_temp">60sp</dimen>
+    <dimen name="text_size_weather">30sp</dimen>
+    <dimen name="text_size_description">20sp</dimen>
+    <dimen name="text_size_location">16sp</dimen>
+</resources>

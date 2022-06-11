@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/Git/ZaniWeather/app/src/main/res/drawable/city_search_background_transition.xml" value="0.2035" />
+        <entry key="..\:/Git/ZaniWeather/app/src/main/res/drawable/city_search_background_transparate.xml" value="0.2035" />
+        <entry key="..\:/Git/ZaniWeather/app/src/main/res/drawable/clear_weather.xml" value="0.308" />
+        <entry key="..\:/Git/ZaniWeather/app/src/main/res/drawable/edit_text_background.xml" value="0.2215" />
+        <entry key="..\:/Git/ZaniWeather/app/src/main/res/drawable/gradient_landing_fragment.xml" value="0.313" />
+        <entry key="..\:/Git/ZaniWeather/app/src/main/res/drawable/ic_icon_cloud.xml" value="0.2515" />
+        <entry key="..\:/Git/ZaniWeather/app/src/main/res/drawable/ic_icon_clouds.xml" value="0.313" />
+        <entry key="..\:/Git/ZaniWeather/app/src/main/res/drawable/ic_icon_clouds1.xml" value="0.313" />
+        <entry key="..\:/Git/ZaniWeather/app/src/main/res/drawable/ic_icon_clouds2.xml" value="0.313" />
+        <entry key="..\:/Git/ZaniWeather/app/src/main/res/drawable/ic_icon_drag_handle.xml" value="0.2385" />
+        <entry key="..\:/Git/ZaniWeather/app/src/main/res/drawable/ic_icon_location.xml" value="0.308" />
+        <entry key="..\:/Git/ZaniWeather/app/src/main/res/drawable/ic_icon_mist.xml" value="0.313" />
+        <entry key="..\:/Git/ZaniWeather/app/src/main/res/drawable/ic_icon_rain.xml" value="0.2515" />
+        <entry key="..\:/Git/ZaniWeather/app/src/main/res/drawable/ic_icon_search.xml" value="0.2815" />
+        <entry key="..\:/Git/ZaniWeather/app/src/main/res/drawable/ic_icon_snow.xml" value="0.313" />
+        <entry key="..\:/Git/ZaniWeather/app/src/main/res/drawable/ic_icon_sun.xml" value="0.313" />
+        <entry key="..\:/Git/ZaniWeather/app/src/main/res/drawable/ic_icon_sunny.xml" value="0.2825" />
+        <entry key="..\:/Git/ZaniWeather/app/src/main/res/drawable/ic_icon_thunderstorm.xml" value="0.313" />
+        <entry key="..\:/Git/ZaniWeather/app/src/main/res/drawable/icon_clouds.xml" value="0.313" />
+        <entry key="..\:/Git/ZaniWeather/app/src/main/res/drawable/sheet_background.xml" value="0.2035" />
+        <entry key="..\:/Git/ZaniWeather/app/src/main/res/drawable/sheet_background_expanded.xml" value="0.2215" />
+        <entry key="..\:/Git/ZaniWeather/app/src/main/res/drawable/sheet_background_transition.xml" value="0.2215" />
+        <entry key="..\:/Git/ZaniWeather/app/src/main/res/layout/activity_main.xml" value="0.44166666666666665" />
+        <entry key="..\:/Git/ZaniWeather/app/src/main/res/layout/fragment_main.xml" value="0.3566021867115223" />
+        <entry key="..\:/Git/ZaniWeather/app/src/main/res/layout/item_saved_city.xml" value="0.440625" />
+      </map>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/build/classes" />
+  </component>
+  <component name="ProjectType">
+    <option name="id" value="Android" />
+  </component>
+</project>

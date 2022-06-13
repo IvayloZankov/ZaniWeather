@@ -3,7 +3,6 @@ package com.fosents.zaniweather.utils;
 public class Constants {
     public static final String OPEN_WEATHER_BASE_URL = "http://api.openweathermap.org/";
     public static final String OPEN_WEATHER_GET_DATA = "data/2.5/weather";
-    public static final String OPEN_WEATHER_API_KEY = "4271009337e8fd378f0498442a8faaf8";
     public static final String OPEN_WEATHER_UNITS = "metric";
 
     public static final String ICON_WEATHER_SUNNY = "sunny";
@@ -15,6 +14,7 @@ public class Constants {
     public static final String ICON_WEATHER_MIST = "mist";
 
     public static final String STATUS_NOT_FOUND = "404";
+    public static final String STATUS_INVALID_KEY = "401";
 
     public static final String PREFS_NAME = "zani_weather_prefs";
     public static final String PREFS_CITIES_KEY = "cities";

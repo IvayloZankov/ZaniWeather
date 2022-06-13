@@ -1,5 +1,10 @@
 # ZaniWeather
 
+## Setup
+Openweathermap Api key is needed in order to use the app. 
+You can get it at https://openweathermap.org/api and set it in gradle.properties file as
+`weather_api_key="xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"`
+
 ## About
 Simple weather application with Hilt-Dagger, RxJava, Retrofit, MVVM, DataStore.
 

@@ -7,8 +7,8 @@ import static com.fosents.zaniweather.utils.Constants.ICON_WEATHER_RAIN;
 import static com.fosents.zaniweather.utils.Constants.ICON_WEATHER_SNOW;
 import static com.fosents.zaniweather.utils.Constants.ICON_WEATHER_SUNNY;
 import static com.fosents.zaniweather.utils.Constants.ICON_WEATHER_THUNDERSTORM;
-import static com.fosents.zaniweather.utils.Constants.OPEN_WEATHER_API_KEY;
 import static com.fosents.zaniweather.utils.Constants.OPEN_WEATHER_UNITS;
+import static com.fosents.zaniweather.utils.Constants.STATUS_INVALID_KEY;
 import static com.fosents.zaniweather.utils.Constants.STATUS_NOT_FOUND;
 
 import android.Manifest;
@@ -124,7 +124,7 @@ public class MainViewModel extends WeatherViewModel {
 
     public void initWeatherDataRequest(boolean isFromUserInput, boolean isFromSavedCity) {
         mLiveDataIsLoading.setValue(true);
-        mWeatherClient.getWeatherData(mCityName, OPEN_WEATHER_UNITS, OPEN_WEATHER_API_KEY)
+        mWeatherClient.getWeatherData(mCityName, OPEN_WEATHER_UNITS, getApplication().getString(R.string.weather_api_key))
                 .subscribe(new WeatherObserver<ApiResponse>() {
                     @Override
                     public void onSuccess(ApiResponse apiResponse) {
@@ -147,6 +147,9 @@ public class MainViewModel extends WeatherViewModel {
                         if (message != null && message.contains(STATUS_NOT_FOUND)) {
                             mLiveDataLocation.setValue(
                                     getApplication().getString(R.string.unknown_city));
+                        } else if (message != null && message.contains(STATUS_INVALID_KEY)) {
+                            mLiveDataLocation.setValue(
+                                    getApplication().getString(R.string.invalid_key));
                         } else if (e instanceof IOException) {
                             mLiveDataLocation.setValue(
                                     getApplication().getString(R.string.no_internet));

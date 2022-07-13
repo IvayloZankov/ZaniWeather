@@ -3,8 +3,10 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Git/ZaniWeather/app/src/main/res/drawable/city_search_background.xml" value="0.291" />
         <entry key="..\:/Git/ZaniWeather/app/src/main/res/drawable/city_search_background_transition.xml" value="0.2035" />
         <entry key="..\:/Git/ZaniWeather/app/src/main/res/drawable/city_search_background_transparate.xml" value="0.2035" />
+        <entry key="..\:/Git/ZaniWeather/app/src/main/res/drawable/city_search_background_transparent.xml" value="0.291" />
         <entry key="..\:/Git/ZaniWeather/app/src/main/res/drawable/clear_weather.xml" value="0.308" />
         <entry key="..\:/Git/ZaniWeather/app/src/main/res/drawable/edit_text_background.xml" value="0.2215" />
         <entry key="..\:/Git/ZaniWeather/app/src/main/res/drawable/gradient_landing_fragment.xml" value="0.313" />

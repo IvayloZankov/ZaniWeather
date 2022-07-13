@@ -6,6 +6,7 @@ import static com.google.android.material.bottomsheet.BottomSheetBehavior.STATE_
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.Manifest;
@@ -59,6 +60,7 @@ public class MainFragment extends Fragment {
     private BottomSheetBehavior<FrameLayout> mSearchSheet;
     private EditText mEditTextCity;
     private LinearLayout mLayoutSavedCities;
+    private ConstraintLayout mEditTextCityContainer;
     private boolean mStateSearchSheet;
 
     private ActivityResultLauncher<String[]> locationPermissionRequest;
@@ -124,6 +126,7 @@ public class MainFragment extends Fragment {
     private void initCityEditText(View view) {
         mEditTextCity = view.findViewById(R.id.editTextCity);
         ImageView imageViewSearch = view.findViewById(R.id.imageSearchCity);
+        mEditTextCityContainer =  view.findViewById(R.id.editTextCityContainer);
         mEditTextCity.setOnEditorActionListener((textView, i, keyEvent) -> {
             if (i == EditorInfo.IME_ACTION_SEARCH) {
                 String cityName = mEditTextCity.getText().toString().trim();
@@ -164,6 +167,7 @@ public class MainFragment extends Fragment {
                         mStateSearchSheet = true;
                         transitionEditText.startTransition(300);
                         transitionBackground.startTransition(300);
+                        mEditTextCityContainer.setVisibility(View.VISIBLE);
                     }
                 }
                 else if (newState == STATE_COLLAPSED) {
@@ -171,6 +175,7 @@ public class MainFragment extends Fragment {
                             mStateSearchSheet = false;
                             transitionEditText.reverseTransition(300);
                             transitionBackground.reverseTransition(300);
+                            mEditTextCityContainer.setVisibility(View.INVISIBLE);
                             InputMethodManager in =
                                     (InputMethodManager) requireActivity()
                                             .getSystemService(Context.INPUT_METHOD_SERVICE);

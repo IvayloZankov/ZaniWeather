@@ -51,7 +51,9 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:indeterminateTint="@color/white_masked" />
+        android:indeterminateTint="@color/white_masked"
+        android:visibility="gone"
+        tools:visibility="visible" />
     <LinearLayout
         android:id="@+id/linearLayoutWeatherData"
         android:layout_width="match_parent"
@@ -116,9 +118,9 @@
                     android:contentDescription="@string/weather_icon">
                 </ImageView>
                 <TextView
+                    android:id="@+id/textViewWeatherData"
                     android:fontFamily="sans-serif-light"
                     android:layout_gravity="center"
-                    android:id="@+id/textViewWeatherData"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@color/white_masked"
@@ -126,8 +128,8 @@
                     tools:text="Sunny"/>
             </LinearLayout>
             <TextView
-                android:fontFamily="sans-serif-light"
                 android:id="@+id/textViewWeatherDataDescription"
+                android:fontFamily="sans-serif-light"
                 android:layout_gravity="end"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -174,9 +176,12 @@
                     android:paddingBottom="@dimen/margin_weather_info"
                     tools:text="Sofia, Bulgaria"/>
                 <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/editTextCityContainer"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
-                    android:layout_marginVertical="@dimen/margin_weather_icon">
+                    android:layout_marginVertical="@dimen/margin_weather_icon"
+                    android:visibility="invisible"
+                    tools:visibility="visible">
                     <EditText
                         android:id="@+id/editTextCity"
                         android:hint="@string/city_name"

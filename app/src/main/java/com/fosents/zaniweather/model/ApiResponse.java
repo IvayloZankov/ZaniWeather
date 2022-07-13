@@ -2,6 +2,7 @@ package com.fosents.zaniweather.model;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @SuppressWarnings("unused")
@@ -24,6 +25,26 @@ public class ApiResponse {
     private String name;
     @SerializedName("cod")
     private Integer cod;
+
+    public ApiResponse(String cityName,
+                       String countryName,
+                       Double temp,
+                       String weatherData,
+                       String weatherDesc) {
+        ApiResponse.Main main = new ApiResponse.Main();
+        main.setTemp(temp);
+        ApiResponse.Weather weather = new ApiResponse.Weather();
+        weather.setMain(weatherData);
+        weather.setDescription(weatherDesc);
+        ArrayList<Weather> weathersList = new ArrayList<>();
+        weathersList.add(weather);
+        ApiResponse.Sys sys = new ApiResponse.Sys();
+        sys.setCountry(countryName);
+        setName(cityName);
+        setSys(sys);
+        setMain(main);
+        setWeather(weathersList);
+    }
 
     public Coord getCoord() {
         return coord;

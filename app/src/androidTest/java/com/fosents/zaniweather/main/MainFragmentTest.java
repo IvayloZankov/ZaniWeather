@@ -1,5 +1,6 @@
 package com.fosents.zaniweather.main;
 
+import static android.Manifest.permission.ACCESS_FINE_LOCATION;
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
@@ -13,6 +14,7 @@ import android.content.res.Resources;
 
 import androidx.test.espresso.action.ViewActions;
 import androidx.test.platform.app.InstrumentationRegistry;
+import androidx.test.rule.GrantPermissionRule;
 
 import com.fosents.zaniweather.R;
 import com.fosents.zaniweather.model.ApiResponse;
@@ -36,8 +38,11 @@ public class MainFragmentTest {
     @Rule
     public HiltAndroidRule hiltRule = new HiltAndroidRule(this);
 
+    @Rule
+    public GrantPermissionRule mRuntimePermissionRule = GrantPermissionRule.grant(ACCESS_FINE_LOCATION);
+
     @Before
-    public void setUp(){
+    public void setUp() {
         hiltRule.inject();
         launchFragmentInHiltContainer(MainFragment.class);
         context = InstrumentationRegistry.getInstrumentation().getTargetContext();
@@ -71,5 +76,13 @@ public class MainFragmentTest {
                 String.valueOf(Math.toIntExact(Math.round(response.getMain().getTemp()))))));
         onView(withId(R.id.textViewWeatherData)).check(matches(withText(response.getWeather().get(0).getMain())));
         onView(withId(R.id.textViewWeatherDataDescription)).check(matches(withText(response.getWeather().get(0).getDescription())));
+    }
+
+    @Test
+    public void button_Location() throws InterruptedException {
+        onView(withId(R.id.floatingLocation)).perform(click());
+        Thread.sleep(3000);
+        onView(withId(R.id.textViewLocation)).check(matches(
+                withText(TEST_CITY_LOCATION + ", " + TEST_COUNTRY_LOCATION)));
     }
 }

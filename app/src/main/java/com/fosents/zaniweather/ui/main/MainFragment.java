@@ -105,14 +105,11 @@ public class MainFragment extends Fragment {
             mImageViewBackground.setImageResource(ints[1]);
         });
         mViewModel.getLiveDataIsLoading().observe(getViewLifecycleOwner(), this::setScreenLoading);
-        mViewModel.getLiveDataRequestPermissions().observe(getViewLifecycleOwner(), aBoolean -> {
-            if (aBoolean) {
-                requestPermissions();
-                mViewModel.resetPermissions();
-            }
+        mViewModel.getLiveDataAddress().observe(getViewLifecycleOwner(), address -> {
+                mTextViewLocation.setText(address.getLocality() + ", " + address.getCountryName());
+                mViewModel.setCityName(address.getLocality());
+                mViewModel.initWeatherDataRequest(false, false);
         });
-        mViewModel.getLiveDataLocation().observe(getViewLifecycleOwner(), string ->
-                mTextViewLocation.setText(string));
         mViewModel.getLiveDataOnError().observe(getViewLifecycleOwner(), throwable -> {
             if (throwable != null)
                 mLayoutData.setVisibility(View.INVISIBLE);
@@ -258,16 +255,15 @@ public class MainFragment extends Fragment {
     private void initFloatLocationButton(@NonNull View view) {
         FloatingActionButton floatingLocation = view.findViewById(R.id.floatingLocation);
         floatingLocation.setOnClickListener(v -> {
-            mViewModel.getUserLocation();
-            mSearchSheet.setState(STATE_COLLAPSED);
-        });
-    }
-
-    private void requestPermissions() {
-        if (!arePermissions(requireContext()))
-        locationPermissionRequest.launch(new String[] {
-                Manifest.permission.ACCESS_FINE_LOCATION,
-                Manifest.permission.ACCESS_COARSE_LOCATION
+            if (!arePermissions(requireContext())) {
+                locationPermissionRequest.launch(new String[]{
+                        Manifest.permission.ACCESS_FINE_LOCATION,
+                        Manifest.permission.ACCESS_COARSE_LOCATION
+                });
+            } else {
+                mViewModel.getUserLocation();
+                mSearchSheet.setState(STATE_COLLAPSED);
+            }
         });
     }
 }

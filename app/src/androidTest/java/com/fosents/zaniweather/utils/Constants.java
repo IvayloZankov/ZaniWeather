@@ -10,9 +10,11 @@ public class Constants {
     public static final String TEST_CITY_1 = "TestCity";
     public static final String TEST_CITY_2 = "TestCityTwo";
     public static final String TEST_CITY_3 = "TestCity3";
+    public static final String TEST_CITY_LOCATION = "TestCityLocation";
     public static final String TEST_COUNTRY_1 = "TestCountry";
     public static final String TEST_COUNTRY_2 = "TestCountryTwo";
     public static final String TEST_COUNTRY_3 = "TestCountry3";
+    public static final String TEST_COUNTRY_LOCATION = "LOC";
     public static final double TEST_TEMP_1 = 54.45;
     public static final double TEST_TEMP_2 = -10.30;
     public static final double TEST_TEMP_3 = 24.00;

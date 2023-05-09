@@ -11,30 +11,25 @@ import static com.fosents.zaniweather.utils.Constants.OPEN_WEATHER_UNITS;
 import static com.fosents.zaniweather.utils.Constants.STATUS_INVALID_KEY;
 import static com.fosents.zaniweather.utils.Constants.STATUS_NOT_FOUND;
 
-import android.Manifest;
 import android.app.Application;
-import android.content.pm.PackageManager;
 import android.location.Address;
-import android.location.Geocoder;
 
 import androidx.annotation.NonNull;
-import androidx.core.app.ActivityCompat;
 import androidx.datastore.preferences.core.Preferences;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.fosents.zaniweather.R;
 import com.fosents.zaniweather.WeatherViewModel;
+import com.fosents.zaniweather.data.LocationClient;
 import com.fosents.zaniweather.data.local.DataStoreClient;
+import com.fosents.zaniweather.data.local.LocationClientImpl;
 import com.fosents.zaniweather.data.remote.WeatherClient;
 import com.fosents.zaniweather.model.ApiResponse;
-import com.google.android.gms.location.FusedLocationProviderClient;
-import com.google.android.gms.location.LocationServices;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
+import java.util.Locale;
 
 import javax.inject.Inject;
 
@@ -47,15 +42,13 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi;
 @HiltViewModel
 public class MainViewModel extends WeatherViewModel {
 
-    private final FusedLocationProviderClient fusedLocationClient;
-
+    private final LocationClient mLocationClient;
     private final WeatherClient mWeatherClient;
     private final DataStoreClient mDataStoreClient;
 
     private final MutableLiveData<ApiResponse> mLiveDataWeatherData = new MutableLiveData<>();
-    private final MutableLiveData<String> mLiveDataLocation = new MutableLiveData<>();
+    private final MutableLiveData<Address> mLiveDataAddress = new MutableLiveData<>();
     private final MutableLiveData<int[]> mLiveDataImages = new MutableLiveData<>();
-    private final MutableLiveData<Boolean> mLiveDataRequestPermissions = new MutableLiveData<>();
     private final MutableLiveData<ArrayList<String>> mLiveDataSavedCities = new MutableLiveData<>();
 
     private String mCityName;
@@ -63,9 +56,10 @@ public class MainViewModel extends WeatherViewModel {
     @Inject
     MainViewModel(@NonNull Application application,
                   WeatherClient weatherClient,
-                  DataStoreClient dataStoreClient) {
+                  DataStoreClient dataStoreClient,
+                  LocationClient locationClient) {
         super(application);
-        fusedLocationClient = LocationServices.getFusedLocationProviderClient(getApplication());
+        mLocationClient = locationClient;
         mWeatherClient = weatherClient;
         mDataStoreClient = dataStoreClient;
         getSavedCities();
@@ -106,16 +100,12 @@ public class MainViewModel extends WeatherViewModel {
         return mLiveDataWeatherData;
     }
 
-    public LiveData<String> getLiveDataLocation() {
-        return mLiveDataLocation;
+    public LiveData<Address> getLiveDataAddress() {
+        return mLiveDataAddress;
     }
 
     public LiveData<int[]> getLiveDataImages() {
         return mLiveDataImages;
-    }
-
-    public MutableLiveData<Boolean> getLiveDataRequestPermissions() {
-        return mLiveDataRequestPermissions;
     }
 
     public LiveData<ArrayList<String>> getLiveDataSavedCities() {
@@ -132,9 +122,10 @@ public class MainViewModel extends WeatherViewModel {
                         setImageResource(apiResponse.getWeather().get(0).getMain());
                         mLiveDataIsLoading.setValue(false);
                         if (isFromUserInput) {
-                            mLiveDataLocation.setValue(
-                                    apiResponse.getName() + ", " +
-                                            apiResponse.getSys().getCountry());
+                            Address address = new Address(Locale.getDefault());
+                            address.setLocality(apiResponse.getName());
+                            address.setCountryName(apiResponse.getSys().getCountry());
+                            mLiveDataAddress.setValue(address);
                             if (!isFromSavedCity)
                                 saveSearchedCities(apiResponse.getName());
                         }
@@ -143,17 +134,17 @@ public class MainViewModel extends WeatherViewModel {
                     @Override
                     public void onError(Throwable e) {
                         super.onError(e);
-                        String message = e.getMessage();
-                        if (message != null && message.contains(STATUS_NOT_FOUND)) {
-                            mLiveDataLocation.setValue(
-                                    getApplication().getString(R.string.unknown_city));
-                        } else if (message != null && message.contains(STATUS_INVALID_KEY)) {
-                            mLiveDataLocation.setValue(
-                                    getApplication().getString(R.string.invalid_key));
-                        } else if (e instanceof IOException) {
-                            mLiveDataLocation.setValue(
-                                    getApplication().getString(R.string.no_internet));
-                        }
+//                        String message = e.getMessage();
+//                        if (message != null && message.contains(STATUS_NOT_FOUND)) {
+//                            mLiveDataAddress.setValue(
+//                                    getApplication().getString(R.string.unknown_city));
+//                        } else if (message != null && message.contains(STATUS_INVALID_KEY)) {
+//                            mLiveDataAddress.setValue(
+//                                    getApplication().getString(R.string.invalid_key));
+//                        } else if (e instanceof IOException) {
+//                            mLiveDataAddress.setValue(
+//                                    getApplication().getString(R.string.no_internet));
+//                        }
                         mLiveDataIsLoading.setValue(false);
                         mLiveDataOnError.setValue(null);
                         mLiveDataWeatherData.setValue(null);
@@ -162,36 +153,7 @@ public class MainViewModel extends WeatherViewModel {
     }
 
     public void getUserLocation() {
-        if (ActivityCompat.checkSelfPermission(
-                getApplication(),
-                Manifest.permission.ACCESS_COARSE_LOCATION
-        ) == PackageManager.PERMISSION_GRANTED) {
-            fusedLocationClient.getLastLocation().addOnSuccessListener(location -> {
-                if (location != null) {
-                    Geocoder geocoder = new Geocoder(getApplication());
-                    List<Address> addresses = new ArrayList<>();
-                    try {
-                        addresses = geocoder.getFromLocation(
-                                location.getLatitude(), location.getLongitude(), 10);
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                    if (addresses.size() > 0) {
-                        Address address = addresses.get(0);
-                        mCityName = address.getLocality();
-                        mLiveDataLocation.setValue(mCityName + ", " + address.getCountryName());
-                        initWeatherDataRequest(false, false);
-                    }
-                }
-            });
-        } else {
-            mLiveDataRequestPermissions.setValue(true);
-            mLiveDataIsLoading.setValue(false);
-        }
-    }
-
-    public void setCityName(String cityName) {
-        mCityName = cityName;
+        mLocationClient.getLocation(mLiveDataAddress);
     }
 
     public void setImageResource(String main) {
@@ -212,7 +174,7 @@ public class MainViewModel extends WeatherViewModel {
         }
     }
 
-    public void resetPermissions() {
-        mLiveDataRequestPermissions.setValue(false);
+    public void setCityName(String cityName) {
+        this.mCityName = cityName;
     }
 }
